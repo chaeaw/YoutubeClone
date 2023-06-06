@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Youtube Clone Coding with NomadCoders",
   "scripts": {
-    "dev": "nodemon --exec babel-node index"
+    "dev": "nodemon --exec babel-node src/server"
   },
   "repository": {
     "type": "git",

@@ -1,0 +1,27 @@
+{
+  "name": "youtubeclone",
+  "version": "1.0.0",
+  "description": "Youtube Clone Coding with NomadCoders",
+  "scripts": {
+    "dev": "nodemon --exec babel-node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chaeaw/YoutubeClone.git"
+  },
+  "author": "chaeaw",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chaeaw/YoutubeClone/issues"
+  },
+  "homepage": "https://github.com/chaeaw/YoutubeClone#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.1",
+    "@babel/node": "^7.22.1",
+    "@babel/preset-env": "^7.22.4",
+    "nodemon": "^2.0.22"
+  }
+}

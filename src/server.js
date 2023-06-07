@@ -3,16 +3,31 @@ import express from "express";
 const PORT = 5000;
 const app = express();
 
+const logger = (req, res, next) => {
+  console.log(`${req.method}, ${req.url}`);
+  next();
+};
+const privateMiddleware = (req, res, next) => {
+  const url = req.url;
+  if (url === "/protected") {
+    console.log("Not Allowed");
+    return res.send("<h1>Not Allowed</h1>");
+  }
+  console.log("Allowed, you may continue.");
+  next();
+};
+
 const handleHome = (req, res) => {
-  return res.send("<h1>wow</h1>");
+  return res.send("I love middle!");
 };
 
-const handleLogin = (req, res) => {
-  return res.send("<h1>login page</h1>");
+const handleProtected = (req, res) => {
+  return res.send("Welcome to the private lounge.");
 };
-
+app.use(logger);
+app.use(privateMiddleware);
 app.get("/", handleHome);
-app.get("/login", handleLogin);
+app.get("/protected", handleProtected);
 
 const handleListening = () => {
   console.log(`Server listening on port http://localhost:${PORT} 🚀`);

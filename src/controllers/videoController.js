@@ -1,11 +1,16 @@
+const fakeUser = {
+  username : "user1",
+  loggedIn : false,
+}
+
 const trending = (req, res) => {
-  res.render("home", { pageTitle: "Home" });
+  return res.render("home", { pageTitle: "Home", fakeUser });
 };
 const see = (req, res) => {
-  res.render("watch", { pageTitle: "Watch" });
+  return res.render("watch", { pageTitle: "Watch" });
 };
 const edit = (req, res) => {
-  res.render("edit", { pageTitle: "Edit" });
+  return res.render("edit", { pageTitle: "Edit" });
 };
 const search = (req, res) => res.send("Search");
 const deleteVideo = (req, res) => {

@@ -1,32 +1,56 @@
 import Video from "../models/Video";
 
-const home = async (req, res) => {
+export const home = async (req, res) => {
   const videos = await Video.find({});
-  return res.render("home", { pageTitle: "Home", videos: [] });
+  return res.render("home", { pageTitle: "Home", videos });
 };
 
-const watch = (req, res) => {
+export const watch = (req, res) => {
   const { id } = req.params;
-  return res.render("watch", { pageTitle: `Watching ${video.title}` });
+  return res.render("watch", { pageTitle: `Watching ` });
 };
 
-const getEdit = (req, res) => {
+export const getEdit = (req, res) => {
   const { id } = req.params;
-  return res.render("edit", { pageTitle: `Editing:  ${video.title}` });
+  return res.render("edit", { pageTitle: `Editing` });
 };
 
-const postEdit = (req, res) => {
+export const postEdit = (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
   return res.redirect(`/videos/${id}`);
 };
-const search = (req, res) => res.send("Search");
-const deleteVideo = (req, res) => {
+export const search = (req, res) => res.send("Search");
+export const deleteVideo = (req, res) => {
   console.log(req.params);
   return res.send("Delete Video");
 };
-const upload = (req, res) => {
-  return res.send("Upload Video");
+export const getUpload = (req, res) => {
+  return res.render("upload", { pageTitle: "Upload Video" });
 };
 
-export { home, getEdit, postEdit, search, watch, deleteVideo, upload };
+export const postUpload = async (req, res) => {
+  const { title, description, hashtags } = req.body;
+  try {
+    await Video.create({
+      title,
+      description,
+
+      hashtags: hashtags
+        .split(",")
+        .map((word) =>
+          word.trim().startsWith("#") ? `word.trim()` : `#${word.trim()}`
+        ),
+      meta: {
+        views: 0,
+        rating: 0,
+      },
+    });
+    return res.redirect("/");
+  } catch (error) {
+    return res.render("upload", {
+      pageTitle: "Upload Video",
+      errorMessage: error._message,
+    });
+  }
+};

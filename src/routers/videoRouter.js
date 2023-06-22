@@ -10,9 +10,10 @@ import {
 
 const videoRouter = express.Router();
 
-videoRouter.get("/:id(\\d+)", watch);
-videoRouter.route("/:id(\\d+)/edit").get(getEdit).post(postEdit);
 videoRouter.route("/upload").get(getUpload).post(postUpload);
+// mongoose에서 랜덤으로 만들어주는 id가 24자의 16진수(0-9 a-f) 값이므로 정규식으로 일치하게끔 설정.
+videoRouter.get("/:id([0-9a-f]{24})", watch);
+videoRouter.route("/:id([0-9a-f]{24})/edit").get(getEdit).post(postEdit);
 
-videoRouter.get("/:id(\\d+)/delete", deleteVideo);
+videoRouter.get("/:id([0-9a-f]{24})/delete", deleteVideo);
 export default videoRouter;

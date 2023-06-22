@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const videoSchema = new mongoose.Schema({
   title: { type: String, required: true, trim: true, maxLength: 80 },
-  description: { type: String, required: true, trim: true, minlength: 20 },
+  description: { type: String, required: true, trim: true, minlength: 10 },
   createdAt: { type: Date, required: true, default: Date.now },
   // Date.now() 가 아닌 이유: function이 바로 실행되지않게 하기 위해! video를 새로 생성시켰을 때 mongoose가 알아서 실행시켜줌.
   hashtags: [{ type: String, trim: true }],
@@ -12,6 +12,15 @@ const videoSchema = new mongoose.Schema({
   },
 });
 
+videoSchema.pre("save", async function () {
+  this.hashtags = this.hashtags[0]
+    .split(",")
+    .map((word) =>
+      word.trim().startsWith("#")
+        ? `#${word.replace(/#/g, "").trim()}`
+        : `#${word.trim()}`
+    );
+});
 const Video = mongoose.model("Video", videoSchema);
 
 export default Video;

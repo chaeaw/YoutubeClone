@@ -38,17 +38,13 @@ export const postEdit = async (req, res) => {
   return res.redirect(`/videos/${id}`);
 };
 export const search = (req, res) => res.send("Search");
-export const deleteVideo = (req, res) => {
-  console.log(req.params);
-  return res.send("Delete Video");
-};
+
 export const getUpload = (req, res) => {
   return res.render("upload", { pageTitle: "Upload Video" });
 };
 
 export const postUpload = async (req, res) => {
   const { title, description, hashtags } = req.body;
-  console.log(hashtags);
   try {
     await Video.create({
       title,
@@ -63,4 +59,11 @@ export const postUpload = async (req, res) => {
       errorMessage: error._message,
     });
   }
+};
+
+export const deleteVideo = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  await Video.findByIdAndDelete(id, {});
+  return res.redirect("/");
 };

@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/chaeaw/YoutubeClone#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.18.2",
     "mongoose": "^7.3.0",
     "morgan": "^1.10.0",
@@ -23,8 +24,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.22.1",
-    "@babel/node": "^7.22.1",
+    "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.22.4",
-    "nodemon": "^2.0.22"
+    "nodemon": "^1.14.9"
   }
 }

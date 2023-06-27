@@ -64,6 +64,7 @@ export const postLogin = async (req, res) => {
 
   return res.redirect("/");
 };
+
 export const edit = (req, res) => res.send("Edit");
 export const remove = (req, res) => res.send("Delete");
 export const logout = (req, res) => res.send("Log Out");

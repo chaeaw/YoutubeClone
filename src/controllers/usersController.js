@@ -159,3 +159,44 @@ export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
 };
+
+export const getEdit = (req, res) => {
+  return res.render("edit-profile", { pageTitle: "Edit Profile" });
+};
+
+export const postEdit = async (req, res) => {
+  const {
+    session: {
+      user: { _id, email: sessioniEmail, username: sessionUsername },
+    },
+    body: { name, email, username, location },
+  } = req;
+
+  const findUsername =
+    username != sessionUsername ? await User.findOne({ username }) : undefined;
+  const findEmail =
+    email != sessioniEmail ? await User.findOne({ email }) : undefined;
+  // form에서 입력한 정보와 session의 정보가 다르다면(변경할 예정이라면) 해당 값을 다른 유저와 중복인지 체크하기 위함!
+  // username(id)와 email은 unique 해야하므로!!
+  if (findUsername || findEmail) {
+    return res.status(400).render("edit-profile", {
+      pageTitle: "Edit Profile",
+      errorMessage: findUsername
+        ? "The username is already taken"
+        : "The email is already taken",
+    });
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      email,
+      username,
+      location,
+    },
+    { new: true } // options ; 새로운 object를 반환해줌. false일 경우 updatedUser가 오브젝트로 반환되지 않음!!!! 그저 update 실행!
+  );
+  req.session.user = updatedUser;
+  return res.redirect("/users/edit");
+};

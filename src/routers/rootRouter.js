@@ -18,5 +18,4 @@ rootRouter
   .get(getLogin)
   .post(postLogin);
 rootRouter.get("/search", search);
-
 export default rootRouter;

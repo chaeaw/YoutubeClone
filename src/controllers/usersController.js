@@ -167,11 +167,11 @@ export const getEdit = (req, res) => {
 export const postEdit = async (req, res) => {
   const {
     session: {
-      user: { _id, email: sessioniEmail, username: sessionUsername },
+      user: { _id, email: sessioniEmail, username: sessionUsername, avatarUrl },
     },
     body: { name, email, username, location },
+    file,
   } = req;
-
   const findUsername =
     username != sessionUsername ? await User.findOne({ username }) : undefined;
   const findEmail =
@@ -190,6 +190,7 @@ export const postEdit = async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
+      avatarUrl: file ? file.path : avatarUrl,
       name,
       email,
       username,

@@ -1,6 +1,19 @@
 import bcrypt from "bcrypt";
 import User from "../models/User";
 
+export const see = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id).populate("videos");
+  if (!user) {
+    return res.status(404).render("404", { pageTitle: "User not found" });
+  }
+
+  return res.render("users/profile", {
+    pageTitle: user.name,
+    user,
+  });
+};
+
 export const getJoin = (req, res) => {
   return res.render("join", { pageTitle: "Join Account" });
 };
